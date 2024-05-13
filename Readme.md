@@ -1,3 +1,9 @@
+## Note: Development discontinued
+This project has been discontinued and is in "maintenance only" mode. We only fix severe problems for our own projects that use Litstack in production.
+You are still welcome to fix and PR any bugs you find.
+
+---
+
 <p align="center">
     <img width="350px" style="max-width:100%;" src="https://raw.githubusercontent.com/litstack/art/master/logo/png/litstack_logo.png">
 </p>
