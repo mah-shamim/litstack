@@ -61,10 +61,15 @@ trait HasMedia
 
         foreach ($possibleConversions[$this->conversionsKey] as $key => $value) {
             $conversion = $this->addMediaConversion($key)
-                ->keepOriginalImageFormat()
                 ->width($value[0])
                 ->height($value[1])
                 ->sharpen($value[2]);
+
+            if($format = config('lit.media.format') ){
+                $conversion->format($format);
+            }else{
+                $conversion->keepOriginalImageFormat();
+            }
 
             $this->applyCrop($conversion, $media);
         }
