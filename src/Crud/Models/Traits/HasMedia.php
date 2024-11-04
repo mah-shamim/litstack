@@ -60,8 +60,12 @@ trait HasMedia
         $this->applyCrop($this->addMediaConversion('preview'), $media);
 
         foreach ($possibleConversions[$this->conversionsKey] as $key => $value) {
-            $conversion = $this->addMediaConversion($key)
-                ->width($value[0])
+            
+            $conversion = $this->addMediaConversion($key);
+
+            $conversion = $this->applyCrop($conversion, $media);
+
+            $conversion->width($value[0])
                 ->height($value[1])
                 ->sharpen($value[2]);
 
@@ -71,7 +75,7 @@ trait HasMedia
                 $conversion->keepOriginalImageFormat();
             }
 
-            $this->applyCrop($conversion, $media);
+            
         }
     }
 
@@ -85,24 +89,24 @@ trait HasMedia
     protected function applyCrop(Conversion $conversion, Media $media = null)
     {
         if (! $media) {
-            return;
+            return  $conversion;
         }
 
         if (! $media->custom_properties) {
-            return;
+            return  $conversion;
         }
 
         if (! array_key_exists('crop', $media->custom_properties)) {
-            return;
+            return  $conversion;
         }
 
         $crop = $media->custom_properties['crop'];
 
-        $conversion->manualCrop(
-            $crop['width'],
-            $crop['height'],
-            $crop['x'],
-            $crop['y']
+        return $conversion->manualCrop(
+            (int) $crop['width'],
+            (int) $crop['height'],
+            (int) $crop['x'],
+            (int) $crop['y']
         );
     }
 }
